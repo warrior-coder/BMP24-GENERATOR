@@ -1,7 +1,7 @@
 # BMP24 Generator
 Just call **write_bmp()** function and programm creates a new bmp according to the draw script.
 
-```JS
+```CPP
 write_bmp("result.bmp", 640, 640);
 ```
 
