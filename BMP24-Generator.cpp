@@ -2,30 +2,17 @@
 #include <stdio.h>
 #define PI 3.14159265358979323846
 
-using namespace std;
-
 typedef unsigned char BYTE;
-
-typedef struct {
+typedef struct
+{
     BYTE B;
     BYTE G;
     BYTE R;
-}RGB;
+} RGB;
 
 // Buffer - part of file which contains pixels data
 RGB** buffer;
 short bw, bh;
-
-RGB get_color(short x, short y)
-{
-    RGB color = {};
-
-    color.R = (BYTE)(255 - (float)x / bw * 255);
-    color.G = (BYTE)((float)x / bw * 255);
-    color.B = (BYTE)((float)y / bh * 255);
-
-    return color;
-}
 
 void set_pixel(short x, short y)
 {
@@ -49,17 +36,6 @@ void fill_circle(short x0, short y0, float R)
     }
 }
 
-void fill_rect(short x1, short y1, short x2, short y2)
-{
-    for (short y = y1; y <= y2; y++)
-    {
-        for (short x = x1; x <= x2; x++)
-        {
-            set_pixel(x, y);
-        }
-    }
-}
-
 void write_bmp(const char* fname, short img_width, short img_height)
 {
     // -+-+-+-+-+-+-+-+-+-+- GENERATE BUFFER -+-+-+-+-+-+-+-+-+-+-
@@ -72,10 +48,11 @@ void write_bmp(const char* fname, short img_width, short img_height)
     for (short y = 0; y < bh; y++)
     {   
         buffer[y] = new RGB[bw];
-
         for (short x = 0; x < bw; x++)
         {
-            buffer[y][x] = get_color(x, y);
+            buffer[y][x].R = (BYTE)(255 - (float)x / bw * 255);
+            buffer[y][x].G = (BYTE)((float)x / bw * 255);
+            buffer[y][x].B = (BYTE)((float)y / bh * 255);
         }
     }
 
@@ -85,14 +62,12 @@ void write_bmp(const char* fname, short img_width, short img_height)
     {
         x = (short)round(img_width / 3 - cos(deg / 180 * PI) * img_height / 4);
         y = (short)round(img_height / 2 + sin(deg / 180 * PI) * img_height / 4);
-
         fill_circle(x, y, 8);
     }
     for (short i = -bh/6; i < bh/6; i++)
     {
         fill_circle(bw/6*2 + i, bh/2, 8);
         fill_circle(bw/6*2, bh/2 + i, 8);
-
         fill_circle(bw/12*9 + i, bh/2, 8);
         fill_circle(bw/12*9, bh/2 + i, 8);
     }
@@ -225,7 +200,7 @@ void write_bmp(const char* fname, short img_width, short img_height)
 
 int main()
 {
-    write_bmp("out.png", 640, 640);
+    write_bmp("result.bmp", 640, 640);
 
     return 0;
 }
