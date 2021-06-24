@@ -1,14 +1,18 @@
 # BMP24 Generator
-Just call **write_bmp()** function and programm creates a new bmp according to the draw script.
+Just create **IMAGE** calss then call **save()** method and programm will create a new .bmp file according to the drawing script.
 
 ```CPP
-write_bmp("result.bmp", 640, 640);
+IMAGE img(640, 640);
+
+// Drawing script...
+
+img.save("out.bmp");
 ```
 
 ## Result: ##
 ![cpp](result.bmp)
 
-## Example of draw script: ##
+## Example of drawing script: ##
 ```CPP
 // Draw gradient background
 for (short y = 0; y < img.height; y++)
